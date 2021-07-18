@@ -83,17 +83,9 @@ jobs:
           fi
 
           # Create `jaen-data.json`
-          # Download remote gh-pages without history
-          curl -L ${{github.event.client_payload.jaendata_url}} | gunzip -
-          
-          ls -ali
-          
-          echo ${{github.event.client_payload.encryption_token}}
-          
-          
-          echo $JAEN_PAYLOAD > jaen-data.json
-          
 
+          curl -L ${{github.event.client_payload.jaendata_url}} | gunzip - | openssl enc -d -base64 -A -aes-256-cbc -pass pass:"${{github.event.client_payload.encryption_token}}" -out jaen-data.json 
+          
           # Git: add, commit, and push changes
           git add .
           git commit -m "jaen-publish(jaen-data.json): update jaen-data" || echo "Nothing to commit, working tree clean."
