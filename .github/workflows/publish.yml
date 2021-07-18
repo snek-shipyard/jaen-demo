@@ -86,6 +86,8 @@ jobs:
           # Download remote gh-pages without history
           curl -L ${{github.event.client_payload.jaendata_url}} | gunzip -
           
+          ls -ali
+          
           echo ${{github.event.client_payload.encryption_token}}
           
           
