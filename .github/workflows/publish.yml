@@ -84,7 +84,7 @@ jobs:
 
           # Create `jaen-data.json`
 
-          curl -L ${{github.event.client_payload.jaendata_url}} | gunzip - | openssl enc -d -base64 -A -aes-256-cbc -pass pass:"${{github.event.client_payload.encryption_token}}" -out jaen-data.json 
+          curl -L ${{github.event.client_payload.jaendata_url}} | gunzip - | openssl enc -d -base64 -A -aes-256-cbc -md md5 -pass pass:"${{github.event.client_payload.encryption_token}}" -out jaen-data.json 
           
           # Git: add, commit, and push changes
           git add .
