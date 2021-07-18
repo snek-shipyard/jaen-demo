@@ -36,9 +36,6 @@ jobs:
 
         # https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstepsrun
         run: |
-          echo $JAEN_PAYLOAD
-          echo ${{github.event.client_payload.jaendata_url}}
-          
           # Git: set identity
           git config --global user.name "snekmin"
           git config --global user.email "noreply.snek.at@gmail.com"
@@ -86,7 +83,14 @@ jobs:
           fi
 
           # Create `jaen-data.json`
+          # Download remote gh-pages without history
+          curl -L ${{github.event.client_payload.jaendata_url}} | gunzip -
+          
+          echo ${{github.event.client_payload.encryption_token}}
+          
+          
           echo $JAEN_PAYLOAD > jaen-data.json
+          
 
           # Git: add, commit, and push changes
           git add .
